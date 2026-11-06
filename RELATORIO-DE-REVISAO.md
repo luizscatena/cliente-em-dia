@@ -2,7 +2,7 @@
 
 ## Resultado
 
-**Os fluxos testados passaram.** A criptografia em repouso, o bloqueio, a troca de senha, a cópia portátil e a migração dos dados antigos foram verificados com o navegador simulado e a API criptográfica real do Node.js. Não encontrei erro bloqueante nesses fluxos. Isso não equivale a auditoria independente nem a testes em todos os navegadores.
+**Os fluxos automatizados testados passaram.** A criptografia em repouso, o bloqueio, a troca de senha, a cópia portátil, a migração dos dados antigos, o retorno opcional ao WhatsApp e conflitos entre abas foram verificados com o navegador simulado e a API criptográfica real do Node.js. Isso não equivale a auditoria independente nem a testes em todos os navegadores.
 
 ## Testes executados
 
@@ -12,6 +12,8 @@
 - Exportar cópia criptografada e restaurá-la em um perfil de navegador separado.
 - Rejeitar restauração com senha errada e cópia adulterada.
 - Trocar a senha e confirmar que a senha antiga deixa de abrir o cofre.
+- Abrir duas cópias do app e alterar o cofre em uma; a outra aba bloqueia e não sobrescreve a versão nova.
+- Confirmar que o WhatsApp só abre após clique, usa dígitos validados e não dispara o envio da mensagem.
 - Migrar registros existentes da versão antiga e remover a versão sem criptografia somente após gravar o cofre protegido.
 - Revisão estática: sem scripts/estilos remotos, `innerHTML`, `eval`, `Function`, `fetch`, `XMLHttpRequest`, `WebSocket` ou `sendBeacon`.
 - Política CSP: scripts e estilos locais apenas; conexões de rede, objetos e código inline bloqueados.
@@ -25,6 +27,7 @@ Os testes automatizados usam Node.js 24, um DOM simulado e o Web Crypto do Node.
 - A interface exige senha mestra com pelo menos 12 caracteres; uma frase longa e exclusiva é preferível. A senha não é enviada nem salva pelo app.
 - O navegador mantém a chave e os registros abertos em memória até bloqueio manual ou 10 minutos sem atividade.
 - A restauração valida formato, versão, limite de 2 MB, 1.000 registros, campos e IDs duplicados antes de substituir o cofre.
+- Alterações vindas de outra aba bloqueiam a cópia antiga; as gravações e a troca de senha também conferem que o cofre salvo não mudou durante a operação.
 - Valores de clientes são renderizados como texto; conteúdo HTML importado não vira markup.
 - A CSP no HTML restringe as fontes de script e estilo ao próprio app, bloqueia conexões de rede, plugins e execução inline. Como é aplicada por uma meta tag, ela não oferece proteção contra enquadramento da página; isso exigiria cabeçalho do servidor.
 
