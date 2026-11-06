@@ -23,5 +23,5 @@ Consulte `RELATORIO-DE-REVISAO.md` para os testes realizados e os limites conhec
 
 ## Hipótese de negócio
 
-A versão gratuita pode atrair prestadores que precisam organizar retornos. Antes de criar recursos pagos, valide com 10 a 20 profissionais quais funções economizariam tempo suficiente para justificar pagamento. O app atual não cobra, não sincroniza dados e não gera renda automaticamente. Uma proposta comercial está em `../kit-do-prestador/PLANO-DE-VALIDACAO-E-RECEITA.md`.
+A versão gratuita pode atrair prestadores que precisam organizar retornos. Antes de criar recursos pagos, valide com 10 a 20 profissionais quais funções economizariam tempo suficiente para justificar pagamento. O app atual não cobra, não sincroniza dados e não gera renda automaticamente.
 
