@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f4f6f2">
+<title>Cliente em Dia — organize seus trabalhos</title>
+<meta name="description" content="Organize clientes, orçamentos e retornos. Seus dados ficam criptografados no seu navegador.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header><div class="brand">cliente <span>em dia</span></div><div class="headright"><span class="securityline">● Cofre local · criptografia AES-GCM</span></div></header>
+<section class="gate" id="vaultGate" hidden><div class="gatecard"><h1 id="gateTitle">Seus dados, só com a sua senha.</h1><p id="gateIntro">Crie uma senha mestra para criptografar seus registros neste navegador.</p>
+  <div class="gateform"><label for="gatePassword">Senha mestra<input class="control" id="gatePassword" type="password" autocomplete="current-password" minlength="12" maxlength="256" placeholder="Use uma frase longa, com 12+ caracteres"></label>
+    <label id="confirmWrap" for="confirmPassword">Confirme a senha<input class="control" id="confirmPassword" type="password" autocomplete="new-password" maxlength="256" placeholder="Digite a senha novamente"></label>
+    <div class="gateactions"><button class="btn" id="unlockBtn" type="button" hidden>Desbloquear</button><button class="btn" id="createBtn" type="button" hidden>Criar cofre criptografado</button><button class="btn light" id="restoreBtn" type="button">Restaurar cópia criptografada</button></div><p class="gate-msg" id="gateMessage" role="status" aria-live="polite"></p></div>
+  <div class="gate-note" id="gateNote">A senha não é enviada nem guardada pelo app. Se você esquecê-la, não será possível recuperar os registros. Guarde a senha e mantenha uma cópia criptografada em local seguro. Para abrir em outro aparelho, leve essa cópia e digite a mesma senha.</div>
+</div></section>
+<main id="appShell" hidden>
+  <section class="intro"><div><h1>Seus clientes, sem se perder.</h1><p>Organize propostas e saiba quem precisa de um retorno.</p></div><div class="actions"><button class="btn light" id="exportBtn" type="button">Baixar cópia criptografada</button><button class="btn light" id="restoreInAppBtn" type="button">Restaurar cópia</button><button class="btn light" id="changePassBtn" type="button">Trocar senha</button><button class="btn light" id="lockBtn" type="button">Bloquear</button><button class="btn" id="newBtn" type="button">+ Novo cliente</button></div></section>
+  <section class="stats" aria-label="Resumo dos trabalhos"><div class="stat"><span>Clientes ativos</span><strong id="countActive">0</strong></div><div class="stat"><span>Orçamentos enviados</span><strong id="countSent">0</strong></div><div class="stat"><span>Em andamento</span><strong id="countApproved">0</strong></div><div class="stat"><span>Retornos para hoje/atrasados</span><strong id="countDue">0</strong></div></section>
+  <section class="panel" aria-label="Lista de clientes"><div class="toolbar"><label class="sr" for="search">Buscar cliente ou serviço</label><input class="control" id="search" type="search" placeholder="Buscar cliente ou serviço"><label class="sr" for="filter">Filtrar por etapa</label><select class="control" id="filter"><option value="todos">Todas as etapas</option><option value="contato">Novo contato</option><option value="orcamento">Preparando orçamento</option><option value="enviado">Orçamento enviado</option><option value="aprovado">Aprovado / em andamento</option><option value="perdido">Não fechado</option></select><span class="hint" id="resultCount" aria-live="polite"></span></div>
+    <div class="tablewrap"><table><thead><tr><th>Cliente / serviço</th><th>Etapa</th><th>Valor</th><th>Próximo retorno</th><th><span class="sr">Ações</span></th></tr></thead><tbody id="rows"></tbody></table></div><div class="empty" id="empty"><strong>Nenhum cliente cadastrado ainda</strong>Adicione seu primeiro contato para começar a organizar os retornos.</div>
+    <div class="notice">Privacidade: os registros ficam criptografados neste navegador e não são enviados pelo app. Limpar os dados do navegador pode apagar o cofre; mantenha cópias criptografadas.</div>
+  </section>
+</main>
+<dialog id="editor" aria-labelledby="formTitle"><form id="clientForm"><div class="modalhead"><h2 id="formTitle">Novo cliente</h2><button class="close" id="closeBtn" type="button" aria-label="Fechar">×</button></div><div class="formbody"><input id="recordId" type="hidden"><div class="formgrid">
+<div class="field"><label for="name">Nome do cliente *</label><input class="control" id="name" maxlength="80" required autocomplete="name"></div>
+<div class="field"><label for="phone">WhatsApp (opcional)</label><input class="control" id="phone" maxlength="30" inputmode="tel" autocomplete="tel" placeholder="DDD + número"></div>
+<div class="field full"><label for="service">Serviço ou trabalho *</label><input class="control" id="service" maxlength="120" required></div>
+<div class="field"><label for="amount">Valor do orçamento (R$)</label><input class="control" id="amount" type="number" min="0" max="100000000" step="0.01" value="0"></div>
+<div class="field"><label for="stage">Etapa</label><select class="control" id="stage"><option value="contato">Novo contato</option><option value="orcamento">Preparando orçamento</option><option value="enviado">Orçamento enviado</option><option value="aprovado">Aprovado / em andamento</option><option value="perdido">Não fechado</option></select></div>
+<div class="field"><label for="followup">Próximo retorno</label><input class="control" id="followup" type="date"></div>
+<div class="field full"><label for="notes">Notas (opcional)</label><textarea class="control" id="notes" rows="3" maxlength="500" placeholder="Detalhes úteis sobre o pedido"></textarea></div>
+</div></div><div class="formfoot"><button class="btn light" id="cancelBtn" type="button">Cancelar</button><button class="btn" type="submit">Salvar cliente</button></div></form></dialog>
+<dialog id="passwordEditor" aria-labelledby="passwordTitle"><form id="passwordForm"><div class="modalhead"><h2 id="passwordTitle">Trocar senha mestra</h2><button class="close" id="passwordClose" type="button" aria-label="Fechar">×</button></div><div class="formbody"><p class="hint">A nova senha protege este cofre e as próximas cópias de segurança. Cópias antigas continuarão protegidas pela senha anterior.</p><div class="formgrid"><div class="field full"><label for="newPassword">Nova senha (12+ caracteres)</label><input class="control" id="newPassword" type="password" minlength="12" maxlength="256" autocomplete="new-password" required></div><div class="field full"><label for="newPasswordAgain">Confirme a nova senha</label><input class="control" id="newPasswordAgain" type="password" maxlength="256" autocomplete="new-password" required></div></div><p class="gate-msg" id="passwordMessage" role="status"></p></div><div class="formfoot"><button class="btn light" id="passwordCancel" type="button">Cancelar</button><button class="btn" type="submit">Atualizar senha</button></div></form></dialog>
+<input id="backupFile" type="file" accept="application/json,.json" hidden>
+<script src="app.js" defer></script>
+</body>
+</html>
+
